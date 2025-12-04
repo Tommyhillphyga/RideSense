@@ -6,7 +6,7 @@ import sys
 import json
 import logging
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from sklearn.feature_extraction.text import TfidfVectorizer
 # configure logging 
 logging.basicConfig(level=logging.INFO)
@@ -123,6 +123,9 @@ class AudioListener:
         #Remove extra whitespaces
         words = [word for word in text.split() if len(text) >= self.min_word_lengthmin_]
         return ' '.join(words)
+
+    def _find_best_match(self, query_text: str) -> Optional[Tuple[str, str, float]]:
+        pass
     
         
 
