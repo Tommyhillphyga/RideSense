@@ -1,0 +1,47 @@
+{
+    "start_trip": [
+        "start a trip",
+        "start the trip",
+        "start trip",
+        "begin the trip",
+        "begin a trip",
+        "begin trip",
+        "commence trip",
+        "trip start",
+        "start driving",
+        "begin driving"
+    ],
+    "ready": [
+        "i'm ready",
+        "im ready",
+        "ready",
+        "i am ready",
+        "ready to go",
+        "ready to start",
+        "all set",
+        "good to go",
+        "ready when you are",
+        "all ready"
+    ],
+    "lets_go": [
+        "let's go",
+        "lets go",
+        "go",
+        "time to go",
+        "we can go",
+        "let us go",
+        "go ahead",
+        "proceed",
+        "move forward",
+        "drive now"
+    ],
+    "navigation": [
+        "start navigation",
+        "begin navigation",
+        "navigate to destination",
+        "start gps",
+        "begin gps",
+        "start directions",
+        "begin directions"
+    ]
+}
