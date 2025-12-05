@@ -6,13 +6,13 @@ logger = logging.getLogger(__name__)
 from speechlistener.audiolistener import AudioListener
 
 
-def main():
+def main(model_path: str = "models/vosk-model-small-en-us-0.15"):
     """
     Main function to run the Phrase listener
     """
 
     listener = AudioListener(
-        model_path= "vosk-model-small-en-us-0.15",
+        model_path= model_path,
         similarity_threshold=0.5,
         min_word_length= 3
     )
@@ -22,4 +22,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    models_path = "models/vosk-model-small-en-us-0.15"
+    main(model_path=models_path)

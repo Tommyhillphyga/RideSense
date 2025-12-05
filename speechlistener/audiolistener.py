@@ -85,7 +85,7 @@ class AudioListener:
 
         # Load Vosk model
         if model_path is None:
-            model_path = "vosk-model-small-en-us-0.15"
+            model_path = ".models/vosk-model-small-en-us-0.15"
             logger.info(f"No model path provided. Using default: {model_path}")
             logger.info(f"Loading Vosk model from: {model_path}")
 
