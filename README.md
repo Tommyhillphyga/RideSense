@@ -48,36 +48,36 @@ the system fast, stable, and suitable for in-vehicle deployment.
 
 ## 🎤 **2.2.1 Audio Capture Layer**
 
-  | **Parameter**   |     **Specification** |
-  |-----------------| ---------------------|
+  | Parameter   | Specification |
+  |-------------|---------------|
   |**Technology**   | PyAudio (callback streaming) |
-  |**Sampling Rate** | **16 kHz**, optimized for speech |
+  |**Sampling Rate** | 16 kHz, optimized for speech |
   |**Channels**      | Mono |
   | **Buffer Size**  | 4096 samples (\~256ms) |
-  | **End-to-End Latency** |  **\< 50ms** |
+  | **End-to-End Latency** |  < 50ms |
 
 ## 🗣️ **2.2.2 Speech Recognition Engine**
 
 
-  | **Parameter**  | **Specification** |
+  | Parameter      | Specification     |
   |----------------|------------------ |
-  | **Engine**     | **Vosk ASR** (Kaldi-based) |
+  | **Engine**     | Vosk ASR (Kaldi-based) |
   | **Model**      | `vosk-model-small-en-us-0.15` (40MB) |
-  | **Accuracy**   | \~93% WER (clean), \~85% (vehicle noise) |
-  | **Latency**    |\< 200ms |
+  | **Accuracy**   | ~93% WER (clean), \~85% (vehicle noise) |
+  | **Latency**    | < 200ms |
   | **Language**   | English (US), extensible |
   --------------------------------------------------
 
 ## 🔍 **2.2.4 TF-IDF Similarity Engine**
 
   
-  |**Parameter**     |      **Specification** |
-  |------------------| --------------------|
+  |Parameter         | Specification     |
+  |------------------| ------------------|
   | **Vectorizer**   | scikit-learn `TfidfVectorizer`|
   | **N-gram Range** | (1, 3) --- unigram → trigram |
   | **Vocabulary Size** | 500--1000 terms |
   | **Similarity Metric** | Cosine similarity |
-  | **Detection Threshold** | Default: **0.5** |
+  | **Detection Threshold** | Default: 0.5|
   ------------------------------------------------
 
 
@@ -137,11 +137,11 @@ Example Output:
 
   | Metric  |  Value |
   |---------|--------|
-  | ASR Latency | \< 200ms |
-  | End-to-End System Latency |  **\< 50ms** |
-  | WER (clean speech)    | \~93% |
-  | WER (vehicle noise) | \~85% |
-  | TF-IDF Accuracy | High for trip-related commands |
+  | **ASR Latency** | \< 200ms |
+  | **End-to-End System Latency** | < 50ms |
+  | **WER (clean speech)**  | ~93% |
+  | **WER (vehicle noise)** | ~85% |
+  | **TF-IDF Accuracy** | High for trip-related commands |
 
 
 # 🤝 Contributing
