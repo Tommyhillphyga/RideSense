@@ -58,34 +58,34 @@ the system fast, stable, and suitable for in-vehicle deployment.
 
 ## 🗣️ **2.2.2 Speech Recognition Engine**
 
-  -----------------------------------------------------------------------
-  **Parameter**   **Specification**
-  --------------- -------------------------------------------------------
-  Engine          **Vosk ASR** (Kaldi-based)
 
-  Model           `vosk-model-small-en-us-0.15` (40MB)
+  | **Parameter**  | **Specification** |
+  |----------------|------------------ |
+  | **Engine**     | **Vosk ASR** (Kaldi-based) |
 
-  Accuracy        \~93% WER (clean), \~85% (vehicle noise)
+  | **Model**      | `vosk-model-small-en-us-0.15` (40MB) |
 
-  Latency         \< 200ms
+  | **Accuracy**   | \~93% WER (clean), \~85% (vehicle noise) |
 
-  Language        English (US), extensible
+  | **Latency**    |\< 200ms |
+
+  | **Language**   | English (US), extensible |
   -----------------------------------------------------------------------
 
 ## 🔍 **2.2.4 TF-IDF Similarity Engine**
 
-  -----------------------------------------------------------------------
-  **Parameter**           **Specification**
-  ----------------------- -----------------------------------------------
-  Vectorizer              scikit-learn `TfidfVectorizer`
+  
+  |**Parameter**     |      **Specification** |
+  ----------------------- --------------------|
+  | **Vectorizer**   | scikit-learn `TfidfVectorizer`|
 
-  N-gram Range            (1, 3) --- unigram → trigram
+  | **N-gram Range** | (1, 3) --- unigram → trigram |
 
-  Vocabulary Size         500--1000 terms
+  | **Vocabulary Size** | 500--1000 terms |
 
-  Similarity Metric       Cosine similarity
+  | **Similarity Metric** | Cosine similarity |
 
-  Detection Threshold     Default: **0.5**
+  | **Detection Threshold** | Default: **0.5** |
   -----------------------------------------------------------------------
 
 
@@ -119,6 +119,9 @@ the system fast, stable, and suitable for in-vehicle deployment.
     pip install -r requirements.txt
 
 ### 3. Download Vosk Model
+
+Download:
+https://alphacephei.com/vosk/models
 
 Recommended: - `vosk-model-small-en-us-0.15`
 
