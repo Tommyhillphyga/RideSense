@@ -5,9 +5,11 @@ import time
 import sys
 import json
 import logging
+import numpy as np
 from dataclasses import dataclass
 from typing import List, Optional, Tuple
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 # configure logging 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -125,8 +127,56 @@ class AudioListener:
         return ' '.join(words)
 
     def _find_best_match(self, query_text: str) -> Optional[Tuple[str, str, float]]:
-        pass
-         "added ds"
+        """
+        Find the best keyword match using TF-IDF and cosine similarity
+        
+        Returns:
+            Tuple of (matched_phrase, category, similarity_score) or None
+        """
+
+        if not query_text or len(query_text) < 1:
+            return None
+        
+        #Vectorize the query text
+
+        try:
+            query_vector = self.vectorizer.transform([query_text])
+        except ValueError:
+            logger.info(f"Error vectorizing query text:")
+            return None
+        
+        #Compute cosine similarities
+        similarity = cosine_similarity(query_vector, self.phrase_vectors)
+
+        #find best match
+        best_idx = np.argmax(similarity[0])
+        best_score = similarity[0][best_idx]
+
+        if best_score >= self.similarity_threshold:
+            matched_phrase = self.all_phrases[best_idx]
+            category = self.phrases_to_category[matched_phrase]
+            return matched_phrase, category, best_score
+        
+        return None
+    
+    def _check_for_keywords(self, text: str) -> Optional[TripEvent]:
+        """Check if the recognized text contains any keywords using TF-IDF"""
+        self.detection_stat['total_utterances'] += 1
+
+        processed_text = self._preprocess_text(text)
+
+        if not processed_text:
+            return None
+        
+        # Find best match using TF-IDF
+        match_result = self._find_best_match(processed_text)
+        
+        if match_result:
+            matched_phrase, category, score = match_result
+
+        
+
+       
     
         
 
