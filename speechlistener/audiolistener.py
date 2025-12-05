@@ -16,7 +16,6 @@ logger = logging.getLogger(__name__)
 
 try:
     import pyaudio
-    import sounddevice as sd
     from vosk import Model, KaldiRecognizer
 except ImportError as e:
     logger.info(f"Required packages not installed. Please install with: \n")
@@ -51,7 +50,7 @@ class AudioListener:
             sample_rate (int): Audio sample rate in HZ.
         """ 
 
-        self.sampe_rate = sample_rate
+        self.sample_rate = sample_rate
         self.keyword_queue = queue.Queue()
         self.is_listening = False
         self.similarity_threshold = similarity_threshold
@@ -61,6 +60,7 @@ class AudioListener:
         with open("keyword_phrases.json", "r") as f:
             self.keywords = json.load(f)
 
+        
         #Flatten all phrases into a single list
         self.all_phrases = []
         self.phrases_to_category = {}
@@ -95,10 +95,10 @@ class AudioListener:
             logger.error(f"Failed to load Vosk model from {model_path}. Error: {e}")
             sys.exit(1)
 
-        self.recognizer = KaldiRecognizer(self.model, self.sampe_rate)
+        self.recognizer = KaldiRecognizer(self.model, self.sample_rate)
 
         #statistic tracking
-        self.detection_stat = {
+        self.detection_stats = {
             'total_utterances': 0,
             'keywords_detected': 0,
             'false_positives': 0,
@@ -123,7 +123,7 @@ class AudioListener:
             text = text.replace(f"{filler} "," ")
 
         #Remove extra whitespaces
-        words = [word for word in text.split() if len(text) >= self.min_word_lengthmin_]
+        words = [word for word in text.split() if len(word) >= self.min_word_length]
         return ' '.join(words)
 
     def _find_best_match(self, query_text: str) -> Optional[Tuple[str, str, float]]:
@@ -161,7 +161,7 @@ class AudioListener:
     
     def _check_for_keywords(self, text: str) -> Optional[TripEvent]:
         """Check if the recognized text contains any keywords using TF-IDF"""
-        self.detection_stat['total_utterances'] += 1
+        self.detection_stats['total_utterances'] += 1
 
         processed_text = self._preprocess_text(text)
 
@@ -175,7 +175,7 @@ class AudioListener:
             matched_phrase, category, score = match_result
 
         # Update statistics
-            self.detection_stats['keyword_detections'] += 1
+            self.detection_stats['keywords_detected'] += 1
             self.detection_stats['similarity_scores'].append(score)
             
             return TripEvent(
@@ -188,7 +188,7 @@ class AudioListener:
         
         return None
 
-    def _audio_callback(self, in_data, status):
+    def _audio_callback(self, in_data, frame_count, time_info, status):
         """Callback function for audio stream"""
         if status:
             logger.info(f"Audio status: {status}")
@@ -272,7 +272,7 @@ class AudioListener:
         print("="*60)
         
         total = self.detection_stats['total_utterances']
-        detections = self.detection_stats['keyword_detections']
+        detections = self.detection_stats['keywords_detected']
         
         if total > 0:
             detection_rate = detections / total
