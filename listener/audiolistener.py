@@ -174,6 +174,36 @@ class AudioListener:
         if match_result:
             matched_phrase, category, score = match_result
 
+        # Update statistics
+            self.detection_stats['keyword_detections'] += 1
+            self.detection_stats['similarity_scores'].append(score)
+            
+            return TripEvent(
+                keyword=category,
+                timestamp=time.time(),
+                confidence=score,
+                matched_phrase=matched_phrase,
+                original_text=text
+            )
+        
+        return None
+
+    def _audio_callback(self, in_data, frame_count, time_info, status):
+        """Callback function for audio stream"""
+        if status:
+            logger.info(f"Audio status: {status}")
+
+        if self.recognizer.AcceptWaveform(in_data):
+            result = json.loads(self.recognizer.Result())
+            text = result.get("text", "")
+            
+            if text and len(text.split()) >= 2:  # Only process if we have at least 2 words
+                logger.info(f"Heard: '{text}'")
+                event = self._check_for_keywords(text)
+                if event:
+                    self.keyword_queue.put(event)
+        
+        return (in_data, pyaudio.paContinue)
         
 
        
